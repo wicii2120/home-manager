@@ -1,0 +1,249 @@
+{ pkgs, lib, ... }:
+{
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      fnm env --use-on-cd --shell fish | source
+      zoxide init fish | source
+    '';
+    shellAbbrs = {
+      pn = "pnpm";
+      px = "pnpx";
+      lzg = "lazygit";
+      lzd = "lazydocker";
+      lzr = "lazyrsync";
+      e = "eza";
+      ea = "eza -a";
+      el = "eza -l";
+      v = "nvim";
+      py = "python3";
+      ev = "envchain";
+      hm = "home-manager";
+    };
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+
+    settings = {
+      "$schema" = "https://starship.rs/config-schema.json";
+
+      command_timeout = 3000;
+
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$localip"
+        "$shlvl"
+        "$singularity"
+        "$kubernetes"
+        "$directory"
+        "$vcsh"
+        "$fossil_branch"
+        "$fossil_metrics"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+        "$hg_branch"
+        "$hg_state"
+        "$pijul_channel"
+        "$docker_context"
+        "$package"
+        "$c"
+        "$cmake"
+        "$cobol"
+        "$daml"
+        "$dart"
+        "$deno"
+        "$dotnet"
+        "$elixir"
+        "$elm"
+        "$erlang"
+        "$fennel"
+        "$fortran"
+        "$gleam"
+        "$golang"
+        "$guix_shell"
+        "$haskell"
+        "$haxe"
+        "$helm"
+        "$java"
+        "$julia"
+        "$kotlin"
+        "$gradle"
+        "$lua"
+        "$nim"
+        "$nodejs"
+        "$ocaml"
+        "$opa"
+        "$perl"
+        "$php"
+        "$pulumi"
+        "$purescript"
+        "$python"
+        "$quarto"
+        "$raku"
+        "$rlang"
+        "$red"
+        "$ruby"
+        "$rust"
+        "$scala"
+        "$solidity"
+        "$swift"
+        "$terraform"
+        "$typst"
+        "$vlang"
+        "$vagrant"
+        "$zig"
+        "$buf"
+        "$nix_shell"
+        "$conda"
+        "$meson"
+        "$spack"
+        "$memory_usage"
+        "$aws"
+        "$gcloud"
+        "$openstack"
+        "$azure"
+        "$nats"
+        "$direnv"
+        "$env_var"
+        "$mise"
+        "$crystal"
+        "$custom"
+        "$sudo"
+        "$cmd_duration"
+        "$fill"
+        "$time"
+        "$line_break"
+        "$jobs"
+        "$battery"
+        "$status"
+        "$os"
+        "$container"
+        "$netns"
+        "$shell"
+        "$character"
+      ];
+
+      fill.symbol = "-";
+
+      time = {
+        disabled = false;
+        time_format = "%T";
+        format = " at [$time]($style) ";
+      };
+
+      character.error_symbol = "[✘](bold red)";
+
+      git_branch.symbol = " ";
+
+      git_status = {
+        deleted = "D";
+        modified = "M";
+        renamed = "R";
+        conflicted = " ";
+        untracked = "U";
+      };
+
+      nodejs = {
+        symbol = " ";
+        detect_extensions = [ ];
+      };
+
+      python.symbol = " ";
+      swift.symbol = "󰛥 ";
+      golang.symbol = " ";
+      rust.symbol = " ";
+      cmake.symbol = " ";
+      deno.symbol = " ";
+      bun.symbol = " ";
+      conda.symbol = " ";
+      cpp.symbol = " ";
+      c.symbol = " ";
+      elixir.symbol = " ";
+      lua.symbol = " ";
+      kubernetes.symbol = " ";
+      package.symbol = " ";
+      zig.symbol = " ";
+      container.symbol = " ";
+      docker_context.symbol = " ";
+    };
+  };
+
+  programs.yazi = {
+    enable = true;
+    package = pkgs.yazi-unwrapped;
+    enableFishIntegration = true;
+
+    # catppuccin-mocha is not packaged in nixpkgs, so it is linked out of the
+    # upstream flavor repo (pinned, since Nix has no updater for it).
+    flavors.catppuccin-mocha = "${
+      pkgs.fetchFromGitHub {
+        owner = "yazi-rs";
+        repo = "flavors";
+        rev = "20b47bfd78880c2674899597fd26bc01b21ff48c";
+        hash = "sha256-NGnfrQdsnQITKCZ0oh6DCxeCR2ozJoPAZetsi3ghHAI=";
+      }
+    }/catppuccin-mocha.yazi";
+
+    theme.flavor.dark = "catppuccin-mocha";
+    theme.flavor.light = "catppuccin-mocha";
+
+    plugins = with pkgs.yaziPlugins; {
+      full-border = {
+        package = full-border;
+        setup = true;
+      };
+      mactag = {
+        package = mactag;
+        setup = true;
+        settings = {
+          keys = {
+            r = "Red";
+            o = "Orange";
+            y = "Yellow";
+            g = "Green";
+            b = "Blue";
+            p = "Purple";
+          };
+          # Colors used to display tags
+          colors = {
+            Red = "#ee7b70";
+            Orange = "#f5bd5c";
+            Yellow = "#fbe764";
+            Green = "#91fc87";
+            Blue = "#5fa3f8";
+            Purple = "#cb88f8";
+          };
+          # Order of the color circle showing in the line mode
+          order = 500;
+        };
+      };
+      git = {
+        package = git;
+        setup = true;
+      };
+      zoom = zoom;
+      piper = piper;
+      diff = diff;
+      chmod = chmod;
+      mount = mount;
+      smart-paste = smart-paste;
+      sshfs = sshfs;
+    };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+}
