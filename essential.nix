@@ -6,6 +6,7 @@
     ./essential/git.nix
     ./essential/shell.nix
     ./essential/editorconfig.nix
+    ./essential/ghostty.nix
   ];
 
   programs.go = {

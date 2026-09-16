@@ -4,7 +4,6 @@
     enable = true;
     interactiveShellInit = ''
       fnm env --use-on-cd --shell fish | source
-      zoxide init fish | source
     '';
     shellAbbrs = {
       pn = "pnpm";
