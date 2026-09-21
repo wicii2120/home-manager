@@ -15,7 +15,7 @@
     keybind = global:cmd+opt+shift+t=toggle_quick_terminal
     keybind = cmd+opt+shift+s=toggle_secure_input
     macos-option-as-alt = true
-    macos-titlebar-style = tabs
+    # macos-titlebar-style = tabs
     notify-on-command-finish = unfocused
     quick-terminal-screen = mouse
     shell-integration-features = cursor, sudo, title, ssh-env, path
