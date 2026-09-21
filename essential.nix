@@ -21,6 +21,7 @@
     sqlite
     tmux
     yq-go
+    maple-mono.NF-CN
   ];
 
   imports = [
