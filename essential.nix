@@ -22,6 +22,8 @@
     tmux
     yq-go
     maple-mono.NF-CN
+    source-han-sans
+    source-han-serif
   ];
 
   imports = [
