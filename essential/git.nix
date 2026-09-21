@@ -64,7 +64,7 @@
     };
   };
 
-  programs.layzygit = {
+  programs.lazygit = {
     enable = true;
     settings = {
       gui = {
