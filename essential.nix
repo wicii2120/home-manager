@@ -1,6 +1,26 @@
 { pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    ast-grep
+    bash
+    cloc
+    croc
+    firecrawl-cli
+    fswatch
+    imagemagick
+    kubectl
+    lazyrsync
+    mcat
+    pandoc
+    pkgconf
+    postgresql
+    rsync
+    socat
+    sqlite
+    tmux
+    yq-go
+  ];
 
   imports = [
     ./essential/git.nix
@@ -9,6 +29,12 @@
     ./essential/ghostty.nix
   ];
 
+  home.shellAliases = {
+    e = "eza";
+    ea = "eza -a";
+    el = "eza -l";
+  };
+
   programs.go = {
     enable = true;
   };
@@ -16,10 +42,6 @@
   programs.jq.enable = true;
   programs.less.enable = true;
 
-  programs.pnpm = {
-    enable = true;
-    package = pkgs.pnpm_12;
-  };
   programs.bun.enable = true;
 
   programs.fd.enable = true;

@@ -1,6 +1,14 @@
 { pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    glab
+  ];
+
+  home.shellAliases = {
+    lzg = "lazygit";
+  };
+
   programs.git = {
     enable = true;
     ignores = [
@@ -53,6 +61,28 @@
     settings = {
       editor = "nvim";
       git_protocol = "https";
+    };
+  };
+
+  programs.layzygit = {
+    enable = true;
+    settings = {
+      gui = {
+        scrollHeight = 12;
+        scrollPastBottom = false;
+        scrollOffMargin = 4;
+      };
+      git = {
+        diffRenderers = [
+          { command = "delta --paging=never --hyperlinks-file-link-format=\"lazygit-edit://{path}:{line}\""; }
+        ];
+      };
+      os = {
+        editPreset = "nvim";
+      };
+      services = {
+        "gitlab.tianhe-tech.com" = "gitlab:gitlab.tianhe-tech.com";
+      };
     };
   };
 }

@@ -1,34 +1,41 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
+  home.packages = with pkgs; [
+    lazyrsync
+  ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    MANPAGER = "nvim +Man! -";
+    HTTP_PROXY = "http://127.0.0.1:6152";
+    HTTPS_PROXY = config.home.sessionVariables.HTTP_PROXY;
+    NODE_USE_ENV_PROXY=1;
+    MCAT_THEME="catppuccin";
+  };
+
+  home.shellAliases = {
+      pn = "pnpm";
+      px = "pnpx";
+      lzr = "lazyrsync";
+      py = "python3";
+      ev = "envchain";
+  };
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      fnm env --use-on-cd --shell fish | source
+      if type -q fnm
+        fnm env --use-on-cd --shell fish | source
+      end
     '';
-    shellAbbrs = {
-      pn = "pnpm";
-      px = "pnpx";
-      lzg = "lazygit";
-      lzd = "lazydocker";
-      lzr = "lazyrsync";
-      e = "eza";
-      ea = "eza -a";
-      el = "eza -l";
-      v = "nvim";
-      py = "python3";
-      ev = "envchain";
-      hm = "home-manager";
-    };
+    preferAbbrs = true;
   };
 
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+  programs.fzf.enable = true;
+  programs.zoxide.enable = true;
 
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
 
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
@@ -181,7 +188,6 @@
   programs.yazi = {
     enable = true;
     package = pkgs.yazi-unwrapped;
-    enableFishIntegration = true;
 
     # catppuccin-mocha is not packaged in nixpkgs, so it is linked out of the
     # upstream flavor repo (pinned, since Nix has no updater for it).
@@ -241,8 +247,8 @@
     };
   };
 
-  programs.zoxide = {
+  programs.direnv = {
     enable = true;
-    enableFishIntegration = true;
+    enableGitIntegration = true;
   };
 }

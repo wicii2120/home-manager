@@ -9,6 +9,10 @@
     ./nvim/sioyek.nix
   ];
 
+  home.shellAliases = {
+      v = "nvim";
+  };
+
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-unwrapped;

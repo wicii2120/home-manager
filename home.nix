@@ -74,6 +74,10 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.shellAliases = {
+    hm = "home-manager";
+  };
+
   imports = [
     ./qol.nix
     ./essential.nix
