@@ -23,6 +23,12 @@
 
   programs.fish = {
     enable = true;
+    # Fish resolves NIX_PROFILES before it reads any user config, so nix's
+    # profile snippet has to run in pre-init or the profile completions and
+    # vendor dirs never load.
+    package = pkgs.fish.override {
+      fishEnvPreInit = "source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish";
+    };
     interactiveShellInit = ''
       if type -q fnm
         fnm env --use-on-cd --shell fish | source
@@ -30,14 +36,6 @@
     '';
     preferAbbrs = true;
   };
-
-  # The store fish does not read the profile snippet the Nix installer wires
-  # into the system's shells, so `nix` and the profile paths would be missing.
-  xdg.configFile."fish/conf.d/nix.fish".text = ''
-    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-      source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-    end
-  '';
 
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
