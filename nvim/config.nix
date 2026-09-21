@@ -1,7 +1,7 @@
-{ ... }:
+{ config, lib, ... }:
 
 let
-  fishShell = "/opt/homebrew/bin/fish";
+  fishShell = lib.getExe config.programs.fish.package;
 in
 {
   xdg.configFile."nvim/lua/config/options.lua".text = ''
