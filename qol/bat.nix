@@ -5,8 +5,8 @@
     enable = true;
     config = {
       pager = "less -FR";
-      themeDark = "Catppuccin Mocha";
-      themeLight = "Catppuccin Latte";
+      theme-dark = "Catppuccin Mocha";
+      theme-light = "Catppuccin Latte";
     };
     themes = {
       catppuccin = {

@@ -31,6 +31,14 @@
     preferAbbrs = true;
   };
 
+  # The store fish does not read the profile snippet the Nix installer wires
+  # into the system's shells, so `nix` and the profile paths would be missing.
+  xdg.configFile."fish/conf.d/nix.fish".text = ''
+    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+      source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+    end
+  '';
+
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
 
