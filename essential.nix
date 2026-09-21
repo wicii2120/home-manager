@@ -7,6 +7,7 @@
     cloc
     croc
     firecrawl-cli
+    ffmpeg
     fswatch
     imagemagick
     kubectl
