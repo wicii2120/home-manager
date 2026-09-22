@@ -45,6 +45,10 @@
       if type -q fnm
         fnm env --use-on-cd --shell fish | source
       end
+
+      if test -n "$GHOSTTY_RESOURCES_DIR" 
+        builtin source "$GHOSTTY_RESOURCES_DIR"/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish
+      end
     '';
     preferAbbrs = true;
   };
