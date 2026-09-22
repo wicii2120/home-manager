@@ -19,7 +19,7 @@
     # macos-titlebar-style = tabs
     notify-on-command-finish = unfocused
     quick-terminal-screen = mouse
-    shell-integration-features = cursor, sudo, title, ssh-env, path
+    shell-integration-features = no-cursor, sudo, title, ssh-env, path
     theme = Catppuccin Mocha
     '';
 }
