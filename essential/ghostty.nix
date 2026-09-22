@@ -18,6 +18,7 @@
     # macos-titlebar-style = tabs
     notify-on-command-finish = unfocused
     quick-terminal-screen = mouse
+    shell-integration = fish
     shell-integration-features = cursor, sudo, title, ssh-env, path
     theme = Catppuccin Mocha
     ''
