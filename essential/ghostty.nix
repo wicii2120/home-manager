@@ -22,6 +22,6 @@
     theme = Catppuccin Mocha
     ''
     + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-      command = zsh -lc ${lib.getExe config.programs.fish.package}
+      command = ${lib.getExe config.programs.fish.package}
     '';
 }

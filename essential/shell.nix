@@ -11,7 +11,19 @@
     HTTPS_PROXY = config.home.sessionVariables.HTTP_PROXY;
     NODE_USE_ENV_PROXY=1;
     MCAT_THEME="catppuccin";
+    # Tools that only read the lowercase names (curl) lose these when the
+    # terminal no longer starts from a login zsh.
+    http_proxy = config.home.sessionVariables.HTTP_PROXY;
+    https_proxy = config.home.sessionVariables.HTTPS_PROXY;
+    no_proxy = "localhost,127.0.0.1,::1";
   };
+
+  home.sessionPath = [
+    "/usr/local/bin"
+    "${config.home.homeDirectory}/.local/bin"
+    "${config.home.homeDirectory}/Library/pnpm/bin"
+    "${config.home.homeDirectory}/.cargo/bin"
+  ];
 
   home.shellAliases = {
       pn = "pnpm";
@@ -35,6 +47,18 @@
       end
     '';
     preferAbbrs = true;
+  };
+
+  # Homebrew has to be detected at shell start: pure flake evaluation cannot
+  # see /opt/homebrew, so an eval-time check would never fire.
+  xdg.configFile."fish/conf.d/homebrew.fish" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
+    text = ''
+      if test -x /opt/homebrew/bin/brew
+        /opt/homebrew/bin/brew shellenv fish | source
+      else if test -x /usr/local/bin/brew
+        /usr/local/bin/brew shellenv fish | source
+      end
+    '';
   };
 
   programs.fzf.enable = true;
