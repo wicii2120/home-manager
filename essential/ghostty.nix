@@ -1,8 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 
 {
   xdg.configFile."ghostty/config".text =
     ''
+    command = ${lib.getExe config.programs.fish.package}
     bell-features = system,attention
     copy-on-select = true
     font-family = Maple Mono NF CN
@@ -19,10 +20,6 @@
     notify-on-command-finish = unfocused
     quick-terminal-screen = mouse
     shell-integration-features = cursor, sudo, title, ssh-env, path
-    cursor-style = block
     theme = Catppuccin Mocha
-    ''
-    + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
-      command = ${lib.getExe config.programs.fish.package}
     '';
 }
