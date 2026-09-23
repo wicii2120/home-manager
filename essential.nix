@@ -21,6 +21,7 @@
     socat
     sqlite
     tmux
+    uv
     yq-go
     maple-mono.NF-CN
     source-han-sans
