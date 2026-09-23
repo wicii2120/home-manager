@@ -99,9 +99,6 @@ in
     oxfmt
     eslint
 
-    ripgrep
-    fd
-    yazi
     tree-sitter
     gcc
 
