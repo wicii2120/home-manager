@@ -223,6 +223,68 @@
     enable = true;
     package = pkgs.yazi-unwrapped;
 
+    settings = {
+      opener = {
+        play = [
+          {
+            run = ''open -a iina "$@"'';
+            orphan = true;
+            "for" = "unix";
+          }
+        ];
+      };
+
+      plugin = {
+        prepend_previewers = [
+          {
+            url = "*/";
+            run = ''piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'';
+          }
+          {
+            url = "*.csv";
+            run = ''piper -- bat -p --color=always "$1"'';
+          }
+          {
+            url = "*.tar*";
+            run = ''piper --format=url -- tar tf "$1"'';
+          }
+          {
+            mime = "application/sqlite3";
+            run = ''piper -- sqlite3 "$1" ".schema --indent"'';
+          }
+          {
+            url = "*.md";
+            # -c forces ANSI through piper's pipe, -f drops image escapes that
+            # cannot render in a text preview, --sc bounds output to the pane.
+            run = ''piper -- mcat -c -f --sc=''${w}x''${h} "$1"'';
+          }
+        ];
+
+        prepend_fetchers = [
+          {
+            url = "*";
+            run = "git";
+            group = "git";
+          }
+          {
+            url = "*/";
+            run = "git";
+            group = "git";
+          }
+          {
+            url = "*";
+            run = "mactag";
+            group = "mactag";
+          }
+          {
+            url = "*/";
+            run = "mactag";
+            group = "mactag";
+          }
+        ];
+      };
+    };
+
     # catppuccin-mocha is not packaged in nixpkgs, so it is linked out of the
     # upstream flavor repo (pinned, since Nix has no updater for it).
     flavors.catppuccin-mocha = "${
