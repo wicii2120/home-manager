@@ -100,7 +100,6 @@ in
     eslint
 
     tree-sitter
-    gcc
 
     # vimtex compiles through latexmk and needs the engines, biber/biblatex
     # and the packages the documents use; texliveFull covers scheme-full
