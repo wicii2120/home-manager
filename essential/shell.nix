@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   home.packages = with pkgs; [
     lazyrsync
@@ -9,13 +14,15 @@
     MANPAGER = "nvim +Man! -";
     HTTP_PROXY = "http://127.0.0.1:6152";
     HTTPS_PROXY = config.home.sessionVariables.HTTP_PROXY;
-    NODE_USE_ENV_PROXY=1;
-    MCAT_THEME="catppuccin";
+    NODE_USE_ENV_PROXY = 1;
+    MCAT_THEME = "catppuccin";
     # Tools that only read the lowercase names (curl) lose these when the
     # terminal no longer starts from a login zsh.
     http_proxy = config.home.sessionVariables.HTTP_PROXY;
     https_proxy = config.home.sessionVariables.HTTPS_PROXY;
     no_proxy = "localhost,127.0.0.1,::1";
+
+    CONTAINER_DEFAULT_PLATFORM = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "linux/arm64";
   };
 
   home.sessionPath = [
@@ -26,11 +33,11 @@
   ];
 
   home.shellAliases = {
-      pn = "pnpm";
-      px = "pnpx";
-      lzr = "lazyrsync";
-      py = "python3";
-      ev = "envchain";
+    pn = "pnpm";
+    px = "pnpx";
+    lzr = "lazyrsync";
+    py = "python3";
+    ev = "envchain";
   };
 
   programs.fish = {
